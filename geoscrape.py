@@ -28,5 +28,15 @@ def printPcap(pcap):
         except:
             pass
 def main():
-    parse = optparse.OptionParser('usage%prog -p <pcap_file>')
-    parser.add_option('-p' , dest='pcapfile', type='string' , help='expect pcap file name')
+    parser = optparse.OptionParser('usage%prog -p <pcap_file>')
+    parser.add_option('-p' , dest='pcapFile', type='string' , help='expect pcap file name')
+    (options, args) = parser.parse_args()
+    if options.pcapFile == None:
+        print parser.usage
+        exit(0)
+    pcapFile = options.pcapFile
+    f = open(pcapFile)
+    pcap = dpkt.pcap.Reader(f)
+    printPcap(pcap)
+if __name__ == '__main__':
+    main()
